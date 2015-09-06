@@ -23,7 +23,7 @@ body {
   width: 33.33333333%;
   box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
 }
 .game-header h1 {
   margin: 0;
@@ -35,7 +35,7 @@ body {
   font-size: 2rem;
 }
 .game-header p {
-  margin: 0 0 1em 0;
+  margin: 1em 0;
 }
 .game-container {
   position: absolute;
@@ -51,7 +51,7 @@ body {
   width: 33.33333333%;
   box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 0 20px;
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -60,10 +60,10 @@ body {
   width: 33.33333333%;
   box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
 }
 .game-footer p {
-  margin: 0;
+  margin: 1em 0;
 }
 .board {
   border: 1px solid #333;
