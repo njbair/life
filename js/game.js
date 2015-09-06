@@ -192,4 +192,10 @@ window.addEventListener("load", function load(event) {
             Life.run = setInterval(Life.cycle, Life.config.cycleInterval);
         }
     });
+    
+    document.getElementById('stepButton').addEventListener("click", function(e){
+        e.preventDefault();
+        
+        Life.cycle();
+    })
 }, false);
