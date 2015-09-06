@@ -20,7 +20,7 @@ body {
           flex-direction: column;
 }
 .game-header {
-  width: 33.33333333%;
+  width: 25%;
   box-sizing: border-box;
   margin: 0;
   padding: 20px 20px 0 20px;
@@ -41,14 +41,14 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 66.66666667%;
+  width: 75%;
   box-sizing: border-box;
   padding: 20px;
   height: 100%;
   cursor: crosshair;
 }
 .game-controls {
-  width: 33.33333333%;
+  width: 25%;
   box-sizing: border-box;
   margin: 0;
   padding: 0 20px;
@@ -57,7 +57,7 @@ body {
           flex: 1;
 }
 .game-footer {
-  width: 33.33333333%;
+  width: 25%;
   box-sizing: border-box;
   margin: 0;
   padding: 0 20px 20px 20px;

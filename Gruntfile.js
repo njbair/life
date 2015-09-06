@@ -1,8 +1,10 @@
 module.exports = function(grunt) {
-    var autoprefixer = require('autoprefixer-core');
     require('jit-grunt')(grunt);
 
     grunt.initConfig({
+        jshint: {
+            all: ['js/**.js']
+        },
         less: {
             development: {
                 options: {
@@ -18,7 +20,7 @@ module.exports = function(grunt) {
         postcss: {
             options: {
                 processors: [
-                    require('autoprefixer-core')({ browsers: ['last 2 versions'] })
+                    require('autoprefixer')({ browsers: ['last 2 versions'] })
                 ]
             },
             dist: { src: 'css/style.css' }
@@ -27,6 +29,9 @@ module.exports = function(grunt) {
             options: {
                 livereload: true,
             },
+            jshint: {
+                files: [ 'js/**.js' ]
+            },
             less: {
                 files: [ '**/*.less' ], // which files to watch
                 tasks: [ 'less', 'postcss' ],
@@ -34,5 +39,6 @@ module.exports = function(grunt) {
         }
     });
     
-    grunt.registerTask('default', ['less', 'postcss', 'watch']);
+    grunt.registerTask('default', ['jshint', 'less', 'postcss', 'watch']);
+    grunt.registerTask('build', ['jshint', 'less', 'postcss']);
 };

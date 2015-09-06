@@ -20,25 +20,28 @@ var Life = {
         var x,y;
         
         Life.board = document.getElementById(Life.config.boardElementId);
+        Life.grid = Life.createGrid();
+        Life.board.appendChild(Life.grid.element);
         
-        Life.grid = {
+        for (y=0; y<Life.grid.rows.length; y++) {
+            Life.grid.rows[y] = Life.createRow(y);
+            Life.grid.element.appendChild(Life.grid.rows[y].element);
+            
+            for (x=0; x<Life.grid.rows[y].columns.length; x++) {
+                Life.grid.rows[y].columns[x] = Life.createCell(x,y);
+                Life.grid.rows[y].element.appendChild(Life.grid.rows[y].columns[x].element);
+            }
+        }
+    },
+    createGrid: function() {
+        var grid = {
             rows: new Array(Life.config.grid.height),
-            element: (function() {
-                var table = document.createElement("table");
-                table.setAttribute("id", "boardTable");
-                table.classList.add("board");
-                
-                table.addEventListener("contextmenu", function(e){
-                    e.preventDefault();
-                });
-                
-                return table;
-            }()),
+            element: Life.createGridElement(),
             map: function(callback) {
                 var x,y;
                 
-                for (y in this.rows) {
-                    for (x in this.rows[y].columns) {
+                for (y=0; y<this.rows.length; y++) {
+                    for (x=0; x<this.rows[y].columns.length; x++) {
                         this.rows[y].columns[x] = callback(this.rows[y].columns[x]);
                     }
                 }
@@ -47,57 +50,67 @@ var Life = {
             }
         };
         
-        Life.board.appendChild(Life.grid.element);
+        return grid;
+    },
+    createRow: function(y) {
+        var row = {
+            columns: new Array(Life.config.grid.width),
+            element: Life.createRowElement(y),
+        };
         
-        for (y=0; y<Life.grid.rows.length; y++) {
-            
-            Life.grid.rows[y] = {
-                columns: new Array(Life.config.grid.width),
-                element: (function() {
-                    var row = document.createElement("tr");
-                    row.setAttribute("id", "row." + y);
-                    row.classList.add("row");
-                    
-                    return row;
-                }())
-            }
-            
-            Life.grid.element.appendChild(Life.grid.rows[y].element);
-            
-            for (x=0; x<Life.grid.rows[y].columns.length; x++) {
-                Life.grid.rows[y].columns[x] = {
-                    x: x,
-                    y: y,
-                    state: false,
-                    neighbors: [false, false, false, false, false, false, false, false],
-                    element: (function() {
-                        var cell = document.createElement("td");
-                        cell.setAttribute("id", "cell." + y + "." + x);
-                        cell.classList.add("cell");
-                        (function(x,y){
-                            cell.addEventListener("mousedown", function(e){
-                                if (e.buttons === 1) {
-                                    Life.setCellState(x,y,true);
-                                } else if (e.buttons === 2) {
-                                    Life.setCellState(x,y,false);
-                                }
-                            });
-                            cell.addEventListener("mouseover", function(e){
-                                if (e.buttons === 1) {
-                                    Life.setCellState(x,y,true);
-                                } else if (e.buttons === 2) {
-                                    Life.setCellState(x,y,false);
-                                }
-                            });
-                        }(x,y));
-                        
-                        return cell;
-                    }())
-                };
-                
-                Life.grid.rows[y].element.appendChild(Life.grid.rows[y].columns[x].element);
-            }
-        }
+        return row;
+    },
+    createCell: function(x,y) {
+        var cell = {
+            x: x,
+            y: y,
+            state: false,
+            neighbors: [false, false, false, false, false, false, false, false],
+            element: Life.createCellElement(x,y)
+        };
+        
+        return cell;
+    },
+    createGridElement: function() {
+        var table = document.createElement("table");
+        table.setAttribute("id", "boardTable");
+        table.classList.add("board");
+        
+        table.addEventListener("contextmenu", function(e){
+            e.preventDefault();
+        });
+        
+        return table;
+    },
+    createRowElement: function(y) {
+        var row = document.createElement("tr");
+        row.setAttribute("id", "row." + y);
+        row.classList.add("row");
+        
+        return row;
+    },
+    createCellElement: function(x,y) {
+        var cell = document.createElement("td");
+        cell.setAttribute("id", "cell." + y + "." + x);
+        cell.classList.add("cell");
+        (function(x,y){
+            cell.addEventListener("mousedown", function(e){
+                if (e.buttons === 1) {
+                    Life.setCellState(x,y,true);
+                } else if (e.buttons === 2) {
+                    Life.setCellState(x,y,false);
+                }
+            });
+            cell.addEventListener("mouseover", function(e){
+                if (e.buttons === 1) {
+                    Life.setCellState(x,y,true);
+                } else if (e.buttons === 2) {
+                    Life.setCellState(x,y,false);
+                }
+            });
+        }(x,y));
+        
+        return cell;
     },
     getCellState: function(x, y) {
         /**
@@ -142,7 +155,7 @@ var Life = {
         var liveNeighborsCount = 0;
         var i;
         
-        for (i in cell.neighbors) {
+        for (i=0; i<cell.neighbors.length; i++) {
             if (cell.neighbors[i]) {
                 liveNeighborsCount++;
             }
@@ -197,5 +210,5 @@ window.addEventListener("load", function load(event) {
         e.preventDefault();
         
         Life.cycle();
-    })
+    });
 }, false);
