@@ -1,0 +1,19 @@
+{
+  "name": "life",
+  "version": "0.1.0",
+  "authors": [
+    "Nick Bair <njbair@gmail.com>"
+  ],
+  "description": "Nick Bair's implementation of Conway's Game of Life.",
+  "main": "index.html",
+  "license": "GPLv2",
+  "homepage": "http://labs.nickbair.net/life",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
