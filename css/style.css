@@ -94,10 +94,38 @@ body {
   margin-top: 100%;
 }
 .button {
-  display: inline-block;
+  display: block;
   background-color: #08b;
-  padding: .5em 1em;
+  margin: 1rem 0;
+  padding: 0 1em;
   color: #fff;
+  font-size: 1.6rem;
+  line-height: 2em;
   font-weight: bold;
   text-decoration: none;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  width: 100%;
+}
+.button:hover,
+.button:focus {
+  background-color: #006388;
+}
+.button.start {
+  background-color: #0b8;
+}
+.button.start:hover,
+.button.start:focus {
+  background-color: #008863;
+}
+.button.stop {
+  background-color: #d53;
+}
+.button.stop:hover,
+.button.stop:focus {
+  background-color: #bd3f20;
+}
+.hide {
+  display: none;
 }

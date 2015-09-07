@@ -8,10 +8,12 @@ var Life = {
             height: 50
         },
         boardElementId: 'gameContainer',
+        controlsElementId: 'gameControls',
         cycleInterval: 5,
     },
     grid: [],
     board: false,
+    controls: {},
     run: false,
     /**
      * Initialize the game
@@ -20,6 +22,7 @@ var Life = {
         var x,y;
         
         Life.board = document.getElementById(Life.config.boardElementId);
+        Life.board.innerHTML = '';
         Life.grid = Life.createGrid();
         Life.board.appendChild(Life.grid.element);
         
@@ -112,6 +115,44 @@ var Life = {
         
         return cell;
     },
+    createControls: function() {
+        var controlsElement = document.getElementById(Life.config.controlsElementId);
+        
+        Life.controls.startButton = Life.createButton("Start", "start", function(){
+            Life.start();
+        });
+        controlsElement.appendChild(Life.controls.startButton);
+        
+        Life.controls.stopButton = Life.createButton("Stop", "stop", function(){
+            Life.stop();
+        });
+        Life.controls.stopButton.classList.add("hide");
+        controlsElement.appendChild(Life.controls.stopButton);
+        
+        Life.controls.stepButton = Life.createButton("Step", '', function(){
+            Life.stop();
+            Life.cycle();
+        });
+        controlsElement.appendChild(Life.controls.stepButton);
+        
+        Life.controls.initButton = Life.createButton("Reinitialize", '', function(){
+            Life.stop();
+            Life.init();
+        });
+        controlsElement.appendChild(Life.controls.initButton);
+    },
+    createButton: function(label, classes, callback) {
+        var button = document.createElement("button");
+        button.setAttribute("class", classes);
+        button.innerHTML = label;
+        button.classList.add("button");
+        button.addEventListener("click", function(e){
+            e.preventDefault();
+            return callback();
+        });
+        
+        return button;
+    },
     getCellState: function(x, y) {
         /**
          * If a cell doesn't exist (i.e., is out of bounds), we can just set it
@@ -186,29 +227,23 @@ var Life = {
             
             return cell;
         });
+    },
+    start: function() {
+        Life.controls.startButton.classList.add("hide");
+        Life.controls.stopButton.classList.remove("hide");
+        Life.run = setInterval(Life.cycle, Life.config.cycleInterval);
+    },
+    stop: function() {
+        Life.controls.stopButton.classList.add("hide");
+        Life.controls.startButton.classList.remove("hide");
+        window.clearInterval(Life.run);
+        Life.run = false;
     }
 };
 
 window.addEventListener("load", function load(event) {
     window.removeEventListener("load", load, false);
+    
+    Life.createControls();
     Life.init();
-    
-    document.getElementById('startButton').addEventListener("click", function(e){
-        e.preventDefault();
-        
-        if (Life.run) {
-            this.innerHTML = "Start";
-            window.clearInterval(Life.run);
-            Life.run = false;
-        } else {
-            this.innerHTML = "Stop";
-            Life.run = setInterval(Life.cycle, Life.config.cycleInterval);
-        }
-    });
-    
-    document.getElementById('stepButton').addEventListener("click", function(e){
-        e.preventDefault();
-        
-        Life.cycle();
-    });
 }, false);

@@ -101,10 +101,42 @@ body {
 }
 
 .button {
-    display: inline-block;
+    display: block;
     background-color: #08b;
-    padding: .5em 1em;
+    margin: 1rem 0;
+    padding: 0 1em;
     color: #fff;
+    font-size: 1.6rem;
+    line-height: 2em;
     font-weight: bold;
     text-decoration: none;
+    border: none;
+    border-radius: 3px;
+    outline: none;
+    width: 100%;
+    
+    &:hover,
+    &:focus {
+        background-color: darken(#08b, 10%);
+    }
+    &.start {
+        background-color: #0b8;
+        
+        &:hover,
+        &:focus {
+            background-color: darken(#0b8, 10%);
+        }
+    }
+    &.stop {
+        background-color: #d53;
+        
+        &:hover,
+        &:focus {
+            background-color: darken(#d53, 10%);
+        }
+    }
+}
+
+.hide {
+    display: none;
 }
