@@ -5,7 +5,7 @@ var Life = {
     config: {
         grid: {
             width: 100,
-            height: 50
+            height: 55 
         },
         boardElementId: 'gameContainer',
         controlsElementId: 'gameControls',
@@ -99,16 +99,16 @@ var Life = {
         (function(x,y){
             cell.addEventListener("mousedown", function(e){
                 if (e.buttons === 1) {
-                    Life.setCellState(x,y,true);
+                    Life.setCellState(x,y,true,true);
                 } else if (e.buttons === 2) {
-                    Life.setCellState(x,y,false);
+                    Life.setCellState(x,y,false,true);
                 }
             });
             cell.addEventListener("mouseover", function(e){
                 if (e.buttons === 1) {
-                    Life.setCellState(x,y,true);
+                    Life.setCellState(x,y,true,true);
                 } else if (e.buttons === 2) {
-                    Life.setCellState(x,y,false);
+                    Life.setCellState(x,y,false,true);
                 }
             });
         }(x,y));
@@ -167,13 +167,17 @@ var Life = {
         
         return Life.grid.rows[y].columns[x].state;
     },
-    setCellState: function(x, y, state) {
+    setCellState: function(x, y, state, manual) {
         Life.grid.rows[y].columns[x].state = state;
         
         if (state) {
             Life.grid.rows[y].columns[x].element.classList.add("alive");
+            Life.grid.rows[y].columns[x].element.classList.add("marked");
         } else {
             Life.grid.rows[y].columns[x].element.classList.remove("alive");
+            if (manual) {
+                Life.grid.rows[y].columns[x].element.classList.remove("marked");
+            }
         }
         
         return true;
