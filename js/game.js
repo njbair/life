@@ -8,7 +8,6 @@ var Life = {
             height: 55 
         },
         boardElementId: 'gameContainer',
-        controlsElementId: 'gameControls',
         cycleInterval: 5,
     },
     grid: [],
@@ -116,42 +115,34 @@ var Life = {
         return cell;
     },
     createControls: function() {
-        var controlsElement = document.getElementById(Life.config.controlsElementId);
-        
-        Life.controls.startButton = Life.createButton("Start", "start", function(){
+        Life.controls.startButton = document.getElementById("startButton");
+        Life.controls.startButton.addEventListener("click", function(){
             Life.start();
         });
-        controlsElement.appendChild(Life.controls.startButton);
         
-        Life.controls.stopButton = Life.createButton("Stop", "stop", function(){
+        Life.controls.stopButton = document.getElementById("stopButton");
+        Life.controls.stopButton.addEventListener("click", function(){
             Life.stop();
         });
         Life.controls.stopButton.classList.add("hide");
-        controlsElement.appendChild(Life.controls.stopButton);
         
-        Life.controls.stepButton = Life.createButton("Step", '', function(){
+        Life.controls.stepButton = document.getElementById("stepButton");
+        Life.controls.stepButton.addEventListener("click", function(){
             Life.stop();
             Life.cycle();
         });
-        controlsElement.appendChild(Life.controls.stepButton);
         
-        Life.controls.initButton = Life.createButton("Reinitialize", '', function(){
+        Life.controls.widthField = document.getElementById("widthField");
+        Life.controls.heightField = document.getElementById("heightField");
+        
+        Life.controls.initButton = document.getElementById("initButton");
+        Life.controls.initButton.addEventListener("click", function(){
             Life.stop();
+            
+            Life.config.grid.width = parseInt(Life.controls.widthField.value, 0);
+            Life.config.grid.height = parseInt(Life.controls.heightField.value, 0);
             Life.init();
         });
-        controlsElement.appendChild(Life.controls.initButton);
-    },
-    createButton: function(label, classes, callback) {
-        var button = document.createElement("button");
-        button.setAttribute("class", classes);
-        button.innerHTML = label;
-        button.classList.add("button");
-        button.addEventListener("click", function(e){
-            e.preventDefault();
-            return callback();
-        });
-        
-        return button;
     },
     getCellState: function(x, y) {
         /**

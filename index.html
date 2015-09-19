@@ -19,7 +19,18 @@
                 </p>
             </header>
             <div id="gameContainer" class="game-container"></div>
-            <div id="gameControls" class="game-controls"></div>
+            <div id="gameControls" class="game-controls">
+                <button class="button start" id="startButton">Start</button>
+                <button class="button stop" id="stopButton">Stop</button>
+                <button class="button" id="stepButton">Step</button>
+                
+                <h3>Grid Options</h3>
+                <label for="widthField">Width</label>
+                <input type="number" id="widthField" min="1" step="1" value="100" />
+                <label for="heightField">Height</label>
+                <input type="number" id="heightField" min="1" step="1" value="55" />
+                <button class="button" id="initButton">Reinitialize</button>
+            </div>
             <footer class="game-footer">
                 <p>By Nick Bair. GPLv2</p>
                 <p>
